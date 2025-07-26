@@ -23,7 +23,7 @@
 }
 
 /* Dark theme colors */
-.dark {
+.monokai {
   background-color: #111010;
   --sh-class: #4c97f8;
   --sh-identifier: white;
@@ -35,6 +35,22 @@
   --sh-property: #e25a1c;
   --sh-entity: #e25a1c;
 }
+
+
+/* monokai theme colors */
+.dark {
+  background-color: #2c2525;
+  --sh-class: #85dacc;
+  --sh-identifier: #fff1f3;
+  --sh-sign: #72696A;
+  --sh-string: #f9cc6c;
+  --sh-keyword: #fd6883;
+  --sh-comment: #C3B7B8;
+  --sh-jsxliterals: #FFF1F3;
+  --sh-property: #f38d70;
+  --sh-entity: #C3B7B8;
+}
+
 
 html {
   min-width: 360px;
