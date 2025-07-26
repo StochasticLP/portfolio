@@ -73,16 +73,16 @@ export default function RootLayout({
           title="JSON Feed"
         />
       </head>
-      <body className="antialiased flex flex-col min-h-screen w-full">
+      <body className="antialiased min-h-screen w-full flex flex-col">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex-auto w-full px-4 sm:px-6 md:px-8 max-w-none">
+          <main className="flex-1 flex flex-col w-full px-4 sm:px-6 md:px-8 max-w-none">
             <Navbar />
-            <div className="w-full">{children}</div>
+            <div className="w-full flex-1">{children}</div>
             <Footer />
             <Analytics />
             <SpeedInsights />

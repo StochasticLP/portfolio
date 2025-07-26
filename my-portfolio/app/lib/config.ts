@@ -9,8 +9,8 @@ export const metaData = {
 
 export const socialLinks = {
   twitter: "https://x.com/1tssirius",
-  github: "https://github.com/1msirius/Nextfolio",
+  github: "https://github.com/StochasticLP",
   instagram: "https://www.instagram.com/",
-  linkedin: "https://www.linkedin.com/",
-  email: "mailto:example@gmail.com",
+  linkedin: "https://www.linkedin.com/in/luke-phillips-ab080020a/",
+  email: "mailto:lukedanielphillips@gmail.com",
 };
