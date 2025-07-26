@@ -1,6 +1,14 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeSwitch } from "./theme-switch";
-import { metaData } from "../lib/config";
+import { metaData, socialLinks } from "../lib/config";
+import {
+  FaGithub,
+  FaRss,
+  FaLinkedinIn,
+} from "react-icons/fa6";
+import { TbMailFilled } from "react-icons/tb";
 
 const navItems = {
   "/blog": { name: "Blog" },
@@ -8,25 +16,54 @@ const navItems = {
   "/photos": { name: "Photos" },
 };
 
-export function Navbar() {
+function SocialLinks() {
+  const socials = [
+    { href: socialLinks.github, icon: <FaGithub />, key: "github" },
+    { href: socialLinks.linkedin, icon: <FaLinkedinIn />, key: "linkedin" },
+    { href: socialLinks.email, icon: <TbMailFilled />, key: "email" },
+    { href: "/rss.xml", icon: <FaRss />, key: "rss", self: true },
+  ];
   return (
-    <nav className="lg:mb-16 mb-12 py-5">
-      <div className="flex flex-col md:flex-row md:items-center justify-between">
-        <div className="flex items-center">
-          <Link href="/" className="text-3xl font-semibold">
+    <div className="flex text-lg gap-3.5 items-center">
+      {socials.map(({ href, icon, key, self }) => (
+        <a
+          key={key}
+          href={href}
+          target={self ? "_self" : "_blank"}
+          rel={self ? undefined : "noopener noreferrer"}
+          className="social-link"
+        >
+          {icon}
+        </a>
+      ))}
+    </div>
+  );
+}
+
+export function Navbar() {
+  const pathname = usePathname();
+  return (
+    <nav className="w-full py-3 mb-8 border-b border-neutral-200 dark:border-neutral-800">
+      <div className="flex flex-row items-center justify-between w-full">
+        <div className="flex items-center min-w-0">
+          <Link
+            href="/"
+            className={`text-3xl font-semibold nav-title${pathname === "/" ? " nav-active" : ""}`}
+          >
             {metaData.title}
           </Link>
         </div>
-        <div className="flex flex-row gap-4 mt-6 md:mt-0 md:ml-auto items-center">
+        <div className="flex flex-row items-center gap-4">
           {Object.entries(navItems).map(([path, { name }]) => (
             <Link
               key={path}
               href={path}
-              className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative"
+              className={`nav-link${pathname === path ? " nav-active" : ""}`}
             >
               {name}
             </Link>
           ))}
+          <div className="mx-2"><SocialLinks /></div>
           <ThemeSwitch />
         </div>
       </div>

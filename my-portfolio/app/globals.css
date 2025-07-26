@@ -1,3 +1,17 @@
+/* Nav underline and highlight styles */
+.nav-link, .social-link, .nav-title {
+  position: relative;
+  transition: color 0.15s;
+}
+.nav-link:hover, .social-link:hover, .nav-title:hover {
+  text-decoration: underline;
+  text-decoration-color: #f9cc6c;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+.nav-active {
+  color: #f9cc6c !important;
+}
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @import "./components/tweet.css";
