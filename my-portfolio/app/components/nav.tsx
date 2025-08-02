@@ -13,7 +13,7 @@ import { TbMailFilled } from "react-icons/tb";
 const navItems = {
   "/blog": { name: "Blog" },
   "/projects": { name: "Projects" },
-  "/photos": { name: "Photos" },
+  "/about": { name: "About" },
 };
 
 function SocialLinks() {
