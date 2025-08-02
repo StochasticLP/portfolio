@@ -1,3 +1,6 @@
+html, body {
+  overflow-x: hidden;
+}
 /* Nav underline and highlight styles */
 .nav-link, .social-link, .nav-title {
   position: relative;

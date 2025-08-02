@@ -1,56 +1,46 @@
 
+
 import StarBackground from "./components/star-background";
 import { socialLinks } from "./lib/config";
+import CartPoleSimulationClient from "./projects/cartpole/CartPoleSimulationClient";
 
 export default function Page() {
   return (
-    <>
-      <StarBackground />
-      <section>
-        <h1 className="mb-8 text-2xl font-medium">Portfolio template!</h1>
-        <div className="prose prose-neutral dark:prose-invert">
-          <p>
-            A clean, fast, and lightweight portfolio template built with Next.js,
-            Vercel, and Tailwind CSS.
-          </p>
-          <p>
-            Nextfolio has everything you need for a portfolio: MDX blog, SEO, RSS,
-            Atom & JSON feeds, analytics, Tweet & YouTube embeds, KaTeX and {""}
-            <a
-              target="_blank"
-              href="https://github.com/1msirius/Nextfolio?tab=readme-ov-file#features"
-            >
-              more
-            </a>
-            .
-          </p>
-          <p>
-            Nextfolio is{" "}
-            <a href={socialLinks.github} target="_blank">
-              open-source
-            </a>{" "}
-            and fully customizable, making it easy to add more features.
-          </p>
-          <p>
-            <a
-              href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F1msirius%2FNextfolio"
-              target="_blank"
-            >
-              Deploy
-            </a>{" "}
-            your Nextfolio site with Vercel in minutes and follow the set up
-            instructions in the{" "}
-            <a href="/blog/getting-started">Getting Started</a> post.
-          </p>
-          <p>
-            Built and maintained by{" "}
-            <a href="https://imsirius.xyz/" target="_blank">
-              Sirius
-            </a>
-            .
-          </p>
-        </div>
-      </section>
-    </>
-  );
+      <>
+        <StarBackground />
+        <section>
+          <h1 className="mb-8 text-2xl font-medium">Welcome!</h1>
+          <div className="flex flex-col md:flex-row gap-8 relative" style={{overflow: 'visible'}}>
+            {/* Left: Text Content */}
+            <div className="md:w-1/2 w-full prose prose-neutral dark:prose-invert relative" style={{zIndex: 1}}>
+              <p>
+                This is the first randition of my portfolio page. I am to add much more
+                in the future such as blog posts, projects, and more!
+              </p>
+              <p>
+                For now, enjoy this simple cartpole simulation built with matter-js. Use the 
+                arrow keys to move the cart left and right. See how well you can 
+                balance the pole without the PID controller!
+              </p>
+            </div>
+            {/* Right: CartPole Simulation (overlapping, behind text) */}
+            <div className="md:w-1/2 w-full flex items-center justify-center relative">
+              <div
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-2/5"
+                style={{
+                  zIndex: 0,
+                  width: 1600,
+                  height: 600,
+                  pointerEvents: 'none',
+                  overflow: 'visible',
+                }}
+              >
+                <CartPoleSimulationClient options={{ moonRender: true, width: 1600, height: 680 }} />
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
 }
+ 
