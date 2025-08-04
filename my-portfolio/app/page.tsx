@@ -1,13 +1,11 @@
 
 
-import StarBackground from "./components/star-background";
 import { socialLinks } from "./lib/config";
 import CartPoleSimulationClient from "./projects/cartpole/CartPoleSimulationClient";
 
 export default function Page() {
   return (
       <>
-        <StarBackground />
         <section>
           <h1 className="mb-8 text-2xl font-medium">Welcome!</h1>
           <div className="flex flex-col md:flex-row gap-8 relative" style={{overflow: 'visible'}}>

@@ -1,13 +1,23 @@
 import React from "react";
 
+// Predefined star data to replace Math.random()
 const STAR_COUNT = 120;
-const stars = Array.from({ length: STAR_COUNT }, (_, i) => ({
-  id: i,
-  top: Math.random() * 100,
-  left: Math.random() * 100,
-  size: Math.random() * 2 + 1,
-  opacity: Math.random() * 0.4 + 0.2, // subtle
-}));
+const stars = Array.from({ length: STAR_COUNT }, (_, i) => {
+  // Deterministic values based on index
+  const seed = i * 12345.6789; // Arbitrary constant for variation
+  const top = (Math.sin(seed) * 10000 + 10000) % 100; // 0 to 100
+  const left = (Math.cos(seed) * 10000 + 10000) % 100; // 0 to 100
+  const size = (Math.sin(seed * 2) * 10000 + 10000) % 2 + 1; // 1 to 3
+  const opacity = (Math.sin(seed * 3) * 10000 + 10000) % 0.4 + 0.2; // 0.2 to 0.6
+
+  return {
+    id: i,
+    top,
+    left,
+    size,
+    opacity,
+  };
+});
 
 export default function StarBackground() {
   return (
@@ -28,7 +38,7 @@ export default function StarBackground() {
             borderRadius: "50%",
             background: "white",
             opacity: star.opacity,
-            filter: "blur(0.5px)",
+            WebkitBackdropFilter: "blur(0.5px)",
           }}
         />
       ))}

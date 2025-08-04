@@ -71,6 +71,15 @@ html, body {
 
 html {
   min-width: 360px;
+  text-size-adjust: 100%;
+}
+
+@layer base {
+  html,
+  :host {
+    -webkit-text-size-adjust: none !important;
+    text-size-adjust: 100%
+  }
 }
 
 .prose {

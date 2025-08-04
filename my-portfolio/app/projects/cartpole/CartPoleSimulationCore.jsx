@@ -146,7 +146,6 @@ export class CartPoleSimulationCore {
         // Find the cart to center the view
         const cartBody = bodies.find((b) => b === self.cart);
         if (!cartBody) {
-          console.warn('Cart body not found in bodies array');
           originalRenderBodies(render, bodies, context); // Fallback
           return;
         }

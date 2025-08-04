@@ -18,10 +18,10 @@ const navItems = {
 
 function SocialLinks() {
   const socials = [
-    { href: socialLinks.github, icon: <FaGithub />, key: "github" },
-    { href: socialLinks.linkedin, icon: <FaLinkedinIn />, key: "linkedin" },
-    { href: socialLinks.email, icon: <TbMailFilled />, key: "email" },
-    { href: "/rss.xml", icon: <FaRss />, key: "rss", self: true },
+    { href: socialLinks.github, icon: <FaGithub />, key: "github", title: "GitHub"},
+    { href: socialLinks.linkedin, icon: <FaLinkedinIn />, key: "linkedin", title: "LinkedIn" },
+    { href: socialLinks.email, icon: <TbMailFilled />, key: "email", title: "Email"},
+    { href: "/rss.xml", icon: <FaRss />, key: "rss", self: true, title: "RSS Feed"},
   ];
   return (
     <div className="flex text-lg gap-3.5 items-center">
