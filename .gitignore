@@ -1,0 +1,62 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Frontend (my-portfolio)
+my-portfolio/node_modules/
+my-portfolio/.pnp/
+my-portfolio/.pnp.js
+my-portfolio/.next/
+my-portfolio/out/
+my-portfolio/build/
+my-portfolio/.vercel/
+my-portfolio/*.tsbuildinfo
+my-portfolio/next-env.d.ts
+
+# Backend (drake-simulation-server)
+drake-simulation-server/venv/
+drake-simulation-server/__pycache__/
+drake-simulation-server/**/__pycache__/
+drake-simulation-server/*.pyc
+drake-simulation-server/**/*.pyc
+drake-simulation-server/*.pyo
+drake-simulation-server/**/*.pyo
+drake-simulation-server/*.pyd
+drake-simulation-server/.pytest_cache/
+drake-simulation-server/.mypy_cache/
+drake-simulation-server/.dmypy.json
+drake-simulation-server/dmypy.json
+
+# Environment variables
+.env
+.env.local
+.env*.local
+my-portfolio/.env
+my-portfolio/.env.local
+my-portfolio/.env*.local
+drake-simulation-server/.env
+
+# Testing
+/coverage
+my-portfolio/coverage/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+*.pem
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
