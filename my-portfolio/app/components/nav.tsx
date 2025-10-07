@@ -43,9 +43,9 @@ function SocialLinks() {
 export function Navbar() {
   const pathname = usePathname();
   return (
-    <nav className="w-full py-3 mb-8 border-b border-neutral-200 dark:border-neutral-800">
-      <div className="flex flex-row items-center justify-between w-full">
-        <div className="flex items-center min-w-0">
+    <nav className="w-full py-2 px-4 sm:px-6 md:px-8">
+      <div className="flex flex-row items-center justify-between w-full py-1 border-b border-yellow-500">
+        <div className="flex items-center min-w-0 ">
           <Link
             href="/"
             className={`text-3xl font-semibold nav-title${pathname === "/" ? " nav-active" : ""}`}

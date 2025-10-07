@@ -6,7 +6,8 @@ import CartPoleSimulationClient from "./projects/cartpole/CartPoleSimulationClie
 export default function Page() {
   return (
       <>
-        <section>
+      <section>
+        <div className="px-4 sm:px-6 md:px-8">
           <h1 className="mb-8 text-2xl font-medium">Welcome!</h1>
           <div className="flex flex-col md:flex-row gap-8 relative" style={{overflow: 'visible'}}>
             {/* Left: Text Content */}
@@ -36,6 +37,7 @@ export default function Page() {
                 <CartPoleSimulationClient options={{ moonRender: true, width: 1600, height: 680 }} />
               </div>
             </div>
+          </div>
           </div>
         </section>
       </>

@@ -69,7 +69,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <StarBackground />
-          <main className="flex-1 flex flex-col w-full px-4 sm:px-6 md:px-8 max-w-none">
+          <main className="flex-1 flex flex-col w-full max-w-none">
             <Navbar />
             <div className="w-full flex-1">{children}</div>
             <Footer />
