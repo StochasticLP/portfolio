@@ -1,15 +1,13 @@
 from abc import ABC, abstractmethod
 import numpy as np
+from numpy.typing import NDArray
 from pydrake.all import (
-    DiagramBuilder,
-    Simulator,
-    AddMultibodyPlantSceneGraph,
-    Parser,
-    MeshcatVisualizer,
+    Meshcat,
+    Simulator
 )
 
 
-class DrakeSimulationBase(ABC):
+class DrakeSimulationBase():
     """
     Base class for Drake simulations.
     
@@ -18,48 +16,53 @@ class DrakeSimulationBase(ABC):
     """
     
     def __init__(self):
-        self.builder = None
-        self.plant = None
-        self.scene_graph = None
-        self.diagram = None
-        self.urdf_path = None
+        self.simulator: Simulator
+        self.meshcat: Meshcat = Meshcat(port=0)
         
-    @abstractmethod
-    def get_urdf_path(self) -> str:
-        """Return the path to the URDF file."""
+    def get_default_state(self) -> NDArray[np.float64]:
+        """Return the default initial state as a numpy array."""
+        return np.array([])
+
+    def build_diagram(self, params, initial_state=None):
+        """Build or rebuild the Drake diagram."""
+        pass
+
+    def get_meshcat_url(self) -> str:
+        return self.meshcat.web_url()
+
+    def initialize_simulation(self):
+        if self.simulator is not None:
+            self.simulator.Initialize()
+
+    def reset_simulation(self):
+        """Reset the simulation to initial state."""
+        pass
+
+
+    def set_target_realtime_rate(self, rate: float):
+        """Set the target realtime rate for the simulation."""
+        pass
+
+    def get_context_time(self) -> float:
+        """Get the current simulation time."""
+        return 0.0
+
+    def advance_simulation(self, target_time: float):
+        """Advance the simulation to the target time."""
         pass
     
-    @abstractmethod
-    def get_default_state(self) -> tuple[float] | list[float] | np.ndarray:
-        """Return the default initial state as a numpy array or tuple."""
+    def get_positions_and_velocities(self) -> NDArray[np.float64]:
+        """Get the positions and velocities of the plant/system."""
+        return np.array([])
+
+    def stop_simulation(self):
+        """Stop/cleanup the simulation."""
         pass
     
-    @abstractmethod
-    def configure_plant(self, plant, params):
-        """
-        Configure the plant after models are loaded but before finalization.
-        Use this to set properties, add constraints, etc.
-        
-        Args:
-            plant: MultibodyPlant instance
-            params: Simulation parameters dict
-        """
-        pass
-    
-    @abstractmethod
-    def add_controllers(self, builder, plant, params) -> dict:
-        """
-        Add controllers and connect them to the plant.
-        
-        Args:
-            builder: DiagramBuilder instance
-            plant: MultibodyPlant instance
-            params: Simulation parameters dict
-            
-        Returns:
-            dict: Dictionary of controllers (for later access if needed)
-        """
-        pass
+
+    def send_data(self):
+        """Send arbitrary data to the client (to be implemented in subclass). Should return a dict."""
+        return {}
     
     def configure_visualization(self, meshcat, params):
         """
@@ -78,58 +81,7 @@ class DrakeSimulationBase(ABC):
             ymax = params.get("ymax", 2.5)
             meshcat.Set2dRenderMode(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax)
     
-    def build_diagram(self, params, meshcat, initial_state=None):
-        """
-        Build the complete Drake diagram.
-        This is called by simulate_system.py
-        
-        Args:
-            params: Simulation parameters dict
-            meshcat: Meshcat instance
-            initial_state: Initial state to set (optional)
-            
-        Returns:
-            tuple: (simulator, plant_context, context, plant)
-        """
-        # Initialize builder and plant
-        self.builder = DiagramBuilder()
-        time_step = params.get("time_step", 0.0)
-        self.plant, self.scene_graph = AddMultibodyPlantSceneGraph(
-            self.builder, time_step=time_step
-        )
-        
-        # Load URDF
-        parser = Parser(self.plant)
-        self.urdf_path = self.get_urdf_path()
-        parser.AddModelsFromUrl(f"file://{self.urdf_path}")
-        
-        # Configure plant before finalization
-        self.configure_plant(self.plant, params)
-        
-        # Finalize plant
-        self.plant.Finalize()
-        
-        # Add controllers
-        self.controllers = self.add_controllers(self.builder, self.plant, params)
-        
-        # Configure visualization
-        self.configure_visualization(meshcat, params)
-        MeshcatVisualizer.AddToBuilder(self.builder, self.scene_graph, meshcat)
-        
-        # Build diagram
-        self.diagram = self.builder.Build()
-        
-        # Create simulator and contexts
-        simulator = Simulator(self.diagram)
-        context = simulator.get_mutable_context()
-        plant_context = self.plant.GetMyMutableContextFromRoot(context)
-        
-        # Set initial state
-        if initial_state is None:
-            initial_state = self.get_default_state()
-        self.plant.SetPositionsAndVelocities(plant_context, initial_state)
-        
-        return simulator, plant_context, context, self.plant
+    # (Removed duplicate build_diagram with meshcat argument)
     
     def handle_keyboard_down(self, key):
         """
@@ -158,3 +110,4 @@ class DrakeSimulationBase(ABC):
             value: The value for the action
         """
         pass
+Simulation = DrakeSimulationBase  # Alias

@@ -9,6 +9,11 @@ from pydrake.all import (
     LinearQuadraticRegulator,
     LeafSystem,
     BasicVector,
+    DiagramBuilder, 
+    AddMultibodyPlantSceneGraph, 
+    Parser, 
+    MeshcatVisualizer, 
+    Simulator,
 )
 from simulations.drake_simulation_base import DrakeSimulationBase
 
@@ -29,21 +34,17 @@ class SwitchableController(LeafSystem):
         # Store plant reference for controller design
         self.plant = plant
         
-        if "manual" in controllers:
-            # Manual control force
-            self.manual_force = 0.0
+        # Manual control force
+        self.manual_force = 0.0
         
-        # LQR controller
-        if "lqr" in controllers:
-            self.lqr_controller = self._design_lqr()
+        self.lqr_controller = self._design_lqr()
         
-        if "pid" in controllers:
-            # PID gains
-            self.kp = 10.0
-            self.ki = 0.0
-            self.kd = 5.0
-            self.integral_error = 0.0
-        
+        # PID gains
+        self.kp = 1000.0
+        self.ki = 0.0
+        self.kd = 1.0
+        self.integral_error = 0.0
+    
         # Declare input port for state
         self.DeclareVectorInputPort("state", BasicVector(4))
         
@@ -87,7 +88,7 @@ class SwitchableController(LeafSystem):
         """Calculate control output based on current mode."""
         state = np.array(self.get_input_port(0).Eval(context))
         
-        if self.controller_active.get("manual", False):
+        if self.controller_active.get("lqr", False):
             # Use LQR controller
             lqr_context = self.lqr_controller.CreateDefaultContext()
             self.lqr_controller.get_input_port(0).FixValue(lqr_context, state)
@@ -136,25 +137,29 @@ class SwitchableController(LeafSystem):
             
             discrete_state.get_mutable_vector(0).SetAtIndex(0, new_integral)
     
-    def set_controller_active(self, controller, value):
+    def toggle_controller(self, controller):
         """
         Switch control mode.
         
         Args:
             mode: One of "manual", "lqr", "pid", "zero"
         """
-        if controller in ["manual", "lqr", "pid", "zero"] and value in [True, False]:
-            self.controller_active[controller] = value
+        if controller in ["manual", "lqr", "pid"] and controller in self.controller_active:
+            self.controller_active[controller] = not self.controller_active[controller]
             # Reset integral when switching to PID
-            if controller == "pid" and value:
+            if controller == "pid" and self.controller_active["pid"]:
                 self.integral_error = 0.0
+        elif controller == "zero":
+            for key in self.controller_active:
+                self.controller_active[key] = False
         else:
-            print(f"Unknown mode: {controller} or invalid value: {value}")
+            print(f"Unknown mode: {controller}")
     
     def set_manual_force(self, force):
         """Set the manual control force."""
         if self.controller_active.get("manual", False):
             self.manual_force = float(force)
+        print("manual force:", self.manual_force)
     
     def set_pid_gains(self, kp=None, ki=None, kd=None):
         """Update PID gains."""
@@ -167,6 +172,75 @@ class SwitchableController(LeafSystem):
 
 
 class CartpoleSimulation(DrakeSimulationBase):
+    def build_diagram(self, params, initial_state=None):
+        self.builder = DiagramBuilder()
+        self.plant, self.scene_graph = AddMultibodyPlantSceneGraph(self.builder, time_step=0.0)
+
+        parser = Parser(self.plant)
+        self.urdf_path = self.get_urdf_path()
+        parser.AddModelsFromUrl(f"file://{self.urdf_path}")
+        self.configure_plant(self.plant, params)
+        self.plant.Finalize()
+
+        self.controllers = self.add_controllers(self.builder, self.plant, params)
+
+        if self.meshcat:
+            self.configure_visualization(self.meshcat, params)
+            MeshcatVisualizer.AddToBuilder(self.builder, self.scene_graph, self.meshcat)
+
+        self.diagram = self.builder.Build()
+        self.simulator = Simulator(self.diagram)
+        self.context = self.simulator.get_mutable_context()
+        self.plant_context = self.plant.GetMyMutableContextFromRoot(self.context)
+        initial_state = initial_state if initial_state is not None else self.get_default_state()
+        self.plant.SetPositionsAndVelocities(self.plant_context, initial_state)
+        self.paused = False
+
+    def get_meshcat_url(self) -> str:
+        return self.meshcat.web_url()
+    def reset_simulation(self):
+        self.context.SetTime(0.0)
+        self.plant.SetPositionsAndVelocities(self.plant_context, self.get_default_state())
+        self.simulator.Initialize()
+
+    def set_target_realtime_rate(self, rate: float):
+        self.simulator.set_target_realtime_rate(rate)
+
+    def get_context_time(self) -> float:
+        return self.context.get_time()
+
+    def advance_simulation(self, target_time: float):
+        if not self.paused:
+            self.simulator.AdvanceTo(target_time)
+
+    def get_positions_and_velocities(self):
+        return self.plant.GetPositionsAndVelocities(self.plant_context)
+
+    def stop_simulation(self):
+        if self.meshcat:
+            self.meshcat.Delete()
+            self.meshcat.Flush()
+            del self.meshcat
+
+    def send_data(self):
+        # Send system state (positions and velocities)
+        state = self.get_positions_and_velocities()
+        return {"state": state.tolist(), "time": self.get_context_time()}
+
+    def handle_ui_input(self, action, value):
+        print("UI action:", action, "value:", value)
+        controller = self.controllers.get("switchController", None)
+        if controller is not None:
+            if action == "set_force":
+                controller.set_manual_force(float(value))
+            elif action == "toggle_controller":
+                controller.toggle_controller(value.get("controller"))
+            elif action == "play":
+                self.paused = False
+            elif action == "pause":
+                self.paused = True
+            elif action == "set_speed":
+                self.set_target_realtime_rate(float(value))
     """
     Cartpole simulation with multiple control modes:
     - LQR: Linear Quadratic Regulator for balancing
@@ -176,18 +250,17 @@ class CartpoleSimulation(DrakeSimulationBase):
     
     def __init__(self):
         super().__init__()
-        self.manual_force_system = None
         self.controller = None
     
     def get_urdf_path(self):
-        """Return path to cartpole URDF."""
-        return os.path.abspath("simulations/cartpole/cartpole.urdf")
+        return os.path.join(os.path.dirname(__file__), "cartpole.urdf")
     
     def get_default_state(self):
         """Return default upright state with small perturbation."""
         # [x, theta, x_dot, theta_dot]
         # Upright is theta = pi
-        return np.array([0, np.pi, 0, 0]) + 0.1 * np.random.randn(4)
+        offset = np.random.normal(np.pi, 0.1)
+        return np.array([0, 0, 0, 0]) + np.array([0, offset, 0, 0])
     
     def configure_plant(self, plant, params):
         """Configure plant properties (optional for cartpole)."""
@@ -215,7 +288,6 @@ class CartpoleSimulation(DrakeSimulationBase):
     def handle_keyboard_down(self, key):
         """Handle keyboard press for manual control."""
         controller = self.controllers.get("switchController", None)
-        
         force_magnitude = 10.0  # Adjust as needed
         if controller is not None:
             if key == "ArrowLeft" or key == "a":
@@ -230,16 +302,6 @@ class CartpoleSimulation(DrakeSimulationBase):
         if controller is not None:
             if key in ["ArrowLeft", "ArrowRight", "a", "d"]:
                 controller.set_manual_force(0.0)
-    
-    def handle_ui_input(self, action, value):
-        """Handle UI inputs."""
-        controller = self.controllers.get("switchController", None)
-
-        if controller is not None:
-            if action == "set_force" and self.manual_force_system:
-                controller.set_manual_force(value)
-            elif action == "set_controller_active":
-                controller.set_controller_active(value.get("controller"), value.get("active", False))
 
 # Create a singleton instance that will be imported by simulate_system.py
 Simulation = CartpoleSimulation
