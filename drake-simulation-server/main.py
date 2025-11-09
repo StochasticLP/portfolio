@@ -95,4 +95,4 @@ async def update_param(sid, data):
     await input_event(sid, {"type": "update_param", "params": data})
 
 if __name__ == "__main__":
-    uvicorn.run(sio_app, host="0.0.0.0", port=8000, log_level="debug")
+    uvicorn.run(sio_app, host="0.0.0.0", port=8000)
