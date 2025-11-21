@@ -1,13 +1,13 @@
 import path from 'path';
 import { readMDXFile } from 'app/lib/posts';
 import { CustomMDX } from 'app/components/mdx';
-import DrakeSimLayout from './drake-sim-layout';
+import DrakeSimLayout from '../drake-sim-layout';
 
 export default function Page() {
-  const { content } = readMDXFile(path.join(process.cwd(), 'content', 'drake-sim-intro.mdx'));
+  const { content } = readMDXFile(path.join(process.cwd(), 'content', 'drake-sim-pid.mdx'));
 
   return (
-    <DrakeSimLayout initialControllers={['manual']}>
+    <DrakeSimLayout initialControllers={['pid']}>
       <CustomMDX source={content} />
     </DrakeSimLayout>
   );

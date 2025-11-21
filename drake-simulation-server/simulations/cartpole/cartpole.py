@@ -1,8 +1,4 @@
-"""
-drake-simulation-server/simulations/cartpole/cartpole.py (REFACTORED)
 
-Cartpole simulation using the base class
-"""
 import os
 import numpy as np
 from pydrake.all import (
@@ -30,6 +26,7 @@ class SwitchableController(LeafSystem):
     - "lqr": LQR balancing controller
     - "pid": PID controller (placeholder)
     - "zero": No control (zero force)
+    - "fvi": Fitted Value Iteration controller
     """
     
     def __init__(self, plant, controllers=[]):
@@ -385,6 +382,7 @@ class CartpoleSimulation(DrakeSimulationBase):
     def send_data(self):
         # Send system state (positions and velocities)
         state = self.get_positions_and_velocities()
+        
         return {"state": state.tolist(), "time": self.get_context_time()}
 
     def handle_ui_input(self, action, value):

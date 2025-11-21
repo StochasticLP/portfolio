@@ -11,7 +11,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="system"
+      defaultTheme="dark"
       enableSystem
       {...props}
     >
@@ -33,11 +33,10 @@ export const ThemeSwitch: React.FC = () => {
       if (storedPreference) {
         return storedPreference as "light" | "dark";
       }
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+      // Default to dark if no preference is stored
+      return "dark";
     }
-    return "light";
+    return "dark";
   };
 
   const reflectPreference = (theme: "light" | "dark") => {
