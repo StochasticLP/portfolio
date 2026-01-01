@@ -26,8 +26,8 @@ export default function MeshcatViewer({ width = '100%', height = '600px' }: Mesh
   // Socket connection handling
   const connectToServer = useCallback(() => {
     //const newSocket = io('ws://localhost:8000', { transports: ['websocket'] });
-    const newSocket = io('https://drake.lukedphillips.com', {transports: ['websocket'],});
-    
+    const newSocket = io('https://drake.lukedanielphillips.com', { transports: ['websocket'], });
+
     newSocket.on('connect', () => {
       setConnected(true);
       setStatus({ message: `Connected! SID: ${newSocket.id}`, color: 'text-green-500' });
@@ -117,23 +117,21 @@ export default function MeshcatViewer({ width = '100%', height = '600px' }: Mesh
   return (
     <div className="space-y-4 p-4">
       <h1 className="text-2xl font-bold mb-4">Drake Simulation Viewer</h1>
-      
+
       <div className="space-x-2">
         <button
           onClick={connectToServer}
           disabled={connected}
-          className={`px-4 py-2 rounded ${
-            connected ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'
-          } text-white`}
+          className={`px-4 py-2 rounded ${connected ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'
+            } text-white`}
         >
           Connect
         </button>
         <button
           onClick={disconnectFromServer}
           disabled={!connected}
-          className={`px-4 py-2 rounded ${
-            !connected ? 'bg-gray-300' : 'bg-red-500 hover:bg-red-600'
-          } text-white`}
+          className={`px-4 py-2 rounded ${!connected ? 'bg-gray-300' : 'bg-red-500 hover:bg-red-600'
+            } text-white`}
         >
           Disconnect
         </button>
