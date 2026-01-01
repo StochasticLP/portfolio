@@ -13,6 +13,7 @@ my-portfolio/next-env.d.ts
 
 # Backend (drake-simulation-server)
 drake-simulation-server/venv/
+drake-simulation-server/.venv/
 drake-simulation-server/grave/
 drake-simulation-server/__pycache__/
 drake-simulation-server/**/__pycache__/
