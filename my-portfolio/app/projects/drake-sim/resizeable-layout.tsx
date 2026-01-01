@@ -1,23 +1,22 @@
 "use client";
 
 import { useState, useRef, useEffect, ReactNode } from "react";
-import MeshcatViewer from "./meshcat-viewer";
 
-interface LayoutProps {
-  pages: ReactNode[];
+interface ResizableLayoutProps {
+  left: ReactNode;
+  right: ReactNode;
 }
 
-export default function ResizableLayout({ pages }: LayoutProps) {
-  const [currentPage, setCurrentPage] = useState(0);
+export default function ResizableLayout({ left, right }: ResizableLayoutProps) {
   const [leftWidth, setLeftWidth] = useState(50); // percentage
   const [isDragging, setIsDragging] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-    // Set initial viewport height minus footer
+    // Set initial viewport height minus header and navbar (106px)
     const updateHeight = () => {
-      setViewportHeight(window.innerHeight - 64 -64 - 61); // 64px for footer (h-16) 61px for header
+      setViewportHeight(window.innerHeight - 106); 
     };
     
     updateHeight();
@@ -55,109 +54,33 @@ export default function ResizableLayout({ pages }: LayoutProps) {
     }
   }, [isDragging]);
 
-  const nextPage = () => {
-    if (currentPage < pages.length - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
   return (
     <div className="flex flex-col">
       <div ref={containerRef} className="flex-1 flex relative">
         {/* Left Panel - Content */}
         <div
           className="overflow-y-auto overflow-x-hidden"
-          style={{ width: `${leftWidth}%`, height: `${viewportHeight + 56}px` }}
+          style={{ width: `${leftWidth}%`, height: `${viewportHeight}px` }}
         >
-          <div className="px-8 py-2">
-            {pages[currentPage]}
+          <div className="px-8 py-4">
+            {left}
           </div>
         </div>
 
         {/* Divider */}
         <div
-          className="w-1 bg-gray-300 cursor-col-resize hover:bg-blue-500 transition-colors relative"
+          className="w-1 bg-[var(--border-color)] cursor-col-resize hover:bg-[var(--color-accent-yellow)] transition-colors relative z-10"
           onMouseDown={handleMouseDown}
         >
         </div>
 
-        {/* Right Panel - Simulation (persistent) */}
+        {/* Right Panel - Simulation */}
         <div
-          className="overflow-hidden p-8 "
-          style={{ width: `${100 - leftWidth}%`}}
+          className="overflow-hidden p-4"
+          style={{ width: `${100 - leftWidth}%`, height: `${viewportHeight}px` }}
         >
-          <MeshcatViewer width="100%" height={viewportHeight} />
+          {right}
         </div>
-      </div>
-
-      {/* Navigation Footer */}
-      <div className="h-16 flex items-center justify-between px-8">
-        {/* Previous Button */}
-        <button
-          onClick={prevPage}
-          disabled={currentPage === 0}
-          className="text-white disabled:text-gray-500 disabled:cursor-not-allowed hover:text-blue-400 transition-colors"
-        >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
-
-        {/* Page Indicators */}
-        <div className="flex gap-3">
-          {pages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index)}
-              className="focus:outline-none"
-            >
-              <div
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentPage
-                    ? "bg-yellow-400"
-                    : "bg-white hover:bg-gray-300"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-
-        {/* Next Button */}
-        <button
-          onClick={nextPage}
-          disabled={currentPage === pages.length - 1}
-          className="text-white disabled:text-gray-500 disabled:cursor-not-allowed hover:text-blue-400 transition-colors"
-        >
-          <svg
-            className="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
       </div>
     </div>
   );

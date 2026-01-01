@@ -27,7 +27,21 @@ html, body {
 }
 
 /* Light theme colors */
+/* Light theme colors */
 :root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-tertiary: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  
+  --color-accent-red: #ef4444;
+  --color-accent-green: #22c55e;
+  --color-accent-blue: #3b82f6;
+  --color-accent-yellow: #eab308;
+
+  /* Syntax Highlighting (Keep existing if needed, or map to new vars) */
   --sh-class: #2d5e9d;
   --sh-identifier: #354150;
   --sh-sign: #8996a3;
@@ -39,24 +53,22 @@ html, body {
   --sh-entity: #e25a1c;
 }
 
-/* Dark theme colors */
-.monokai {
-  background-color: #111010;
-  --sh-class: #4c97f8;
-  --sh-identifier: white;
-  --sh-sign: #8996a3;
-  --sh-string: #0fa295;
-  --sh-keyword: #f47067;
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: #e25a1c;
-}
-
-
-/* monokai theme colors */
+/* Dark theme colors (Monokai Pro) */
 .dark {
-  background-color: #2c2525;
+  --bg-primary: #2c2525;
+  --bg-secondary: #403838;
+  --bg-tertiary: #5b5353;
+  --text-primary: #fff1f3;
+  --text-secondary: #c3b7b8;
+  --border-color: #211c1c;
+
+  --color-accent-red: #fd6883;
+  --color-accent-green: #adda78;
+  --color-accent-blue: #85dacc;
+  --color-accent-yellow: #f9cc6c;
+
+  /* Syntax Highlighting */
+  background-color: var(--bg-primary);
   --sh-class: #85dacc;
   --sh-identifier: #fff1f3;
   --sh-sign: #72696A;
