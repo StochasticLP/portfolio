@@ -26,7 +26,7 @@ export default function MeshcatViewer({ width = '100%', height = '600px' }: Mesh
   // Socket connection handling
   const connectToServer = useCallback(() => {
     //const newSocket = io('ws://localhost:8000', { transports: ['websocket'] });
-    const newSocket = io('https://drake.lukedanielphillips.com', { transports: ['websocket'], });
+    const newSocket = io('https://drake.lukedanielphillips.com', { transports: ['websocket'] });
 
     newSocket.on('connect', () => {
       setConnected(true);
