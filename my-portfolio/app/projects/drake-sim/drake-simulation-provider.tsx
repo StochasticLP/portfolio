@@ -31,8 +31,8 @@ export default function DrakeSimulationProvider({ children, initialControllers =
     // or we can check NODE_ENV.
 
     const url = process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8000'
-      : 'https://drake.lukedanielphillips.com';
+      ? 'https://drake.lukedanielphillips.com'
+      : 'http://localhost:8000';
 
     const newSocket = io(url, { transports: ['websocket'] });
 
