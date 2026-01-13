@@ -21,21 +21,11 @@ export default function DrakeSimulationProvider({ children, initialControllers =
   const [activeControllers, setActiveControllers] = useState<string[]>(initialControllers);
 
   const connect = useCallback(() => {
-    // Default to production URL, fallback to localhost for dev/debugging if needed
-    // Ideally this could be an env var, but for now we'll try the production one first
-    // or just use the one specified in the plan: default drake.lukedphillips.com
-    
-    // Note: The user mentioned "default to drake.lukedphillips.com, fallback to localhost:8000".
-    // Since io() doesn't really have a "fallback" mechanism built-in in this simple way without connection logic,
-    // we will default to the production URL. If the user wants to debug locally, they might need to change this 
-    // or we can check NODE_ENV.
-    
-    const url = process.env.NODE_ENV === 'development' 
-      ? 'http://localhost:8000' 
-      : 'https://drake.lukedphillips.com';
+
+    const url = 'https://drake.lukedanielphillips.com'
 
     const newSocket = io(url, { transports: ['websocket'] });
-    
+
     newSocket.on('connect', () => {
       setConnected(true);
       setStatus({ message: `Connected! SID: ${newSocket.id}`, color: 'text-[var(--color-accent-green)]' });
@@ -90,7 +80,7 @@ export default function DrakeSimulationProvider({ children, initialControllers =
       action: 'toggle_controller',
       value: { controller: type },
     });
-    
+
     // Optimistically update local state or wait for feedback? 
     // For now, we'll just update our local list to reflect what we *think* is happening,
     // but ideally the backend should confirm. 
@@ -101,7 +91,7 @@ export default function DrakeSimulationProvider({ children, initialControllers =
         return [...prev, type];
       }
     });
-    
+
     setStatus({ message: `Toggled controller ${type}`, color: 'text-[var(--color-accent-green)]' });
   }, [socket]);
 

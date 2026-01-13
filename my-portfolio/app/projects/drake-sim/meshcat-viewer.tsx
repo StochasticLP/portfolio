@@ -1,3 +1,4 @@
+//THIS FILE NEEDS TO BE DELETED
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -26,7 +27,7 @@ export default function MeshcatViewer({ width = '100%', height = '600px' }: Mesh
   // Socket connection handling
   const connectToServer = useCallback(() => {
     //const newSocket = io('ws://localhost:8000', { transports: ['websocket'] });
-    const newSocket = io('https://drake.lukedanielphillips.com', { transports: ['websocket'], });
+    const newSocket = io('https://drake.lukedanielphillips.com');
 
     newSocket.on('connect', () => {
       setConnected(true);
