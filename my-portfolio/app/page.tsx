@@ -13,8 +13,9 @@ export default function Page() {
             {/* Left: Text Content */}
             <div className="md:w-1/2 w-full prose prose-neutral dark:prose-invert relative" style={{zIndex: 1}}>
               <p>
-                This is the first randition of my portfolio page. I am to add much more
-                in the future such as blog posts, projects, and more!
+                I'm an aspiring robotics researcher interested in vision-based learning and agile control.
+                Check out my <a href="/projects">projects</a> page to see some of my work, or my
+                <a href="/about"> about</a> page to learn more about me.
               </p>
               <p>
                 For now, enjoy this simple cartpole simulation built with matter-js. Use the 
