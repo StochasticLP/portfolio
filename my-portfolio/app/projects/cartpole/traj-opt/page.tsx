@@ -4,7 +4,7 @@ import { CustomMDX } from 'app/components/mdx';
 import DrakeSimLayout from '../drake-sim-layout';
 
 export default function Page() {
-  const { content } = readMDXFile(path.join(process.cwd(), 'content', 'drake-sim-traj-opt.mdx'));
+  const { content } = readMDXFile(path.join(process.cwd(), 'content', 'drake', 'drake-sim-traj-opt.mdx'));
 
   return (
     <DrakeSimLayout initialControllers={['traj-opt']}>

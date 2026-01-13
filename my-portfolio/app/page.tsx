@@ -26,7 +26,7 @@ export default function Page() {
             {/* Right: CartPole Simulation (overlapping, behind text) */}
             <div className="md:w-1/2 w-full flex items-center justify-center relative">
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-3/10"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-9/20"
                 style={{
                   zIndex: 0,
                   width: 2000,

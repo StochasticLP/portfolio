@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function About() {
-  const { content } = readMDXFile(path.join(process.cwd(), "content", "about.mdx"));
+  const { content } = readMDXFile(path.join(process.cwd(), "content", "about", "about.mdx"));
 
   return (
     <section className="max-w-2xl mx-auto px-4 py-8 space-y-6 text-justify">

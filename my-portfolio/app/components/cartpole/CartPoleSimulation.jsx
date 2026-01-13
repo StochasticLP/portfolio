@@ -98,7 +98,7 @@ const CartPoleSimulation = ({ options = {} }) => {
   return (
     <div className="relative flex flex-col items-center">
       <canvas ref={canvasRef} width={width} height={height} />
-      <div className="absolute bottom-540 right-200 pointer-events-auto bg-[var(--text-primary)] text-[var(--bg-primary)] p-3 rounded-lg shadow-lg">
+      <div className="absolute bottom-420 right-200 pointer-events-auto bg-[var(--text-primary)] text-[var(--bg-primary)] p-3 rounded-lg shadow-lg">
         <label className="flex items-center gap-2 cursor-pointer text-sm font-bold select-none">
           <input
             type="checkbox"
