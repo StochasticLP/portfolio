@@ -120,7 +120,7 @@ export class CartPoleSimulationCore {
         sprite: new Image(),
       },
     });
-    this.ground.custom.sprite.src = 'assets/moonRealistic.png';
+    this.ground.custom.sprite.src = 'assets/moonRealisticLossy.webp';
 
     Matter.Composite.add(this.engine.world, [
       this.ground,
