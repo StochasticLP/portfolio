@@ -7,6 +7,7 @@ import { TweetComponent } from "./tweet";
 import { CaptionComponent } from "./caption";
 import { YouTubeComponent } from "./youtube";
 import { ImageGrid } from "./image-grid";
+import { DownloadButton } from "./download-button";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
@@ -117,7 +118,9 @@ let components = {
   Table,
   del: Strikethrough,
   Callout,
+  DownloadButton,
 };
+
 
 export function CustomMDX(props) {
   return (

@@ -1,5 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
+import path from "path";
+import { readMDXFile } from "app/lib/posts";
+import { CustomMDX } from "app/components/mdx";
 
 export const metadata: Metadata = {
   title: "About",
@@ -7,9 +10,13 @@ export const metadata: Metadata = {
 };
 
 export default function About() {
+  const { content } = readMDXFile(path.join(process.cwd(), "content", "about.mdx"));
+
   return (
-    <section>
-      <h1 className="mb-8 text-2xl font-medium">To be finished...</h1>
+    <section className="max-w-2xl mx-auto px-4 py-8 space-y-6 text-justify">
+      <CustomMDX source={content} />
     </section>
   );
 }
+
+
