@@ -27,6 +27,7 @@ export default function RootLayout({
     style={{ textSizeAdjust: "100%" }}>
       <head>
         <title>{metaData.title}</title>
+        <link rel="icon" href="/logo.png" type="image/png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

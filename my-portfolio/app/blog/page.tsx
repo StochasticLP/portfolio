@@ -12,8 +12,9 @@ export default function BlogPosts() {
 
   return (
     <section className="mx-auto mt-12 w-full px-4 md:w-3/5">
-      <h1 className="mb-12 text-3xl font-medium tracking-tighter text-[var(--text-primary)]">Our Blog</h1>
-      <div className="flex flex-col">
+      <h1 className="mb-12 text-3xl font-medium tracking-tighter text-[var(--text-primary)]">Blog</h1>
+      <p className="text-neutral-600 dark:text-neutral-400">Nothing yet!</p>
+      {/* <div className="flex flex-col">
         {allBlogs
           .sort((a, b) => {
             if (
@@ -30,7 +31,6 @@ export default function BlogPosts() {
                 href={`/blog/${post.slug}`}
                 className="group flex w-full flex-col gap-6 md:flex-row md:items-stretch"
               >
-                {/* Image Container */}
                 <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-lg border border-[var(--border-color)] bg-[var(--bg-secondary)] md:w-1/3">
                   {post.metadata.image ? (
                     <Image
@@ -46,7 +46,6 @@ export default function BlogPosts() {
                   )}
                 </div>
 
-                {/* Content Container */}
                 <div className="relative flex grow flex-col justify-start md:w-2/3">
                   <div className="flex flex-col items-center">
                     <h2 className="mb-3 text-xl font-medium text-[var(--text-primary)]">
@@ -57,7 +56,6 @@ export default function BlogPosts() {
                     </p>
                   </div>
 
-                  {/* Date in bottom right */}
                   <div className="mt-auto flex w-full justify-end pt-4">
                     <span className="text-xs text-[var(--text-secondary)] opacity-70">
                       {formatDate(post.metadata.publishedAt, false)}
@@ -66,13 +64,12 @@ export default function BlogPosts() {
                 </div>
               </Link>
 
-              {/* Dividing Line */}
               {index < allBlogs.length - 1 && (
                 <div className="my-10 h-px w-full bg-[var(--border-color)]" />
               )}
             </div>
           ))}
-      </div>
+      </div> */}
     </section>
   );
 }
