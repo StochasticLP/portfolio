@@ -1,9 +1,14 @@
-import CartPoleSimulationClient from ".//CartPoleSimulationClient";
+import path from 'path';
+import { readMDXFile } from 'app/lib/posts';
+import { CustomMDX } from 'app/components/mdx';
+import DrakeSimLayout from './drake-sim-layout';
 
-export default function CartpoleCanvasPage() {
+export default function Page() {
+  const { content } = readMDXFile(path.join(process.cwd(), 'content', 'drake-sim-intro.mdx'));
+
   return (
-    <div style={{ width: "100vw", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "transparent" }}>
-      <CartPoleSimulationClient options={{ moonRender: false, width: 1000, height: 600 }} />
-    </div>
+    <DrakeSimLayout initialControllers={['manual']}>
+      <CustomMDX source={content} />
+    </DrakeSimLayout>
   );
 }

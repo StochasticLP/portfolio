@@ -1,7 +1,7 @@
 
 
 import { socialLinks } from "./lib/config";
-import CartPoleSimulationClient from "./projects/cartpole/CartPoleSimulationClient";
+import CartPoleSimulationClient from "./components/cartpole/CartPoleSimulationClient";
 
 export default function Page() {
   return (
@@ -35,7 +35,7 @@ export default function Page() {
                   overflow: 'visible',
                 }}
               >
-                <CartPoleSimulationClient options={{ moonRender: true, width: 1600, height: 680 }} />
+                <CartPoleSimulationClient options={{ moonRender: true, width: 1600, height: 800 }} />
               </div>
             </div>
           </div>
