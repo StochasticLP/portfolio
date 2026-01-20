@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect, ReactNode } from 'react';
+import { useState, useCallback, useEffect, ReactNode, useRef } from 'react';
 import { Socket, io } from 'socket.io-client';
 import { DrakeSimulationContext, ControllerState } from './drake-simulation-context';
 
@@ -20,14 +20,32 @@ export default function DrakeSimulationProvider({ children, initialControllers =
   });
   const [activeControllers, setActiveControllers] = useState<string[]>(initialControllers);
 
-  const connect = useCallback(() => {
+  const connectionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    //const url = "https://drake.lukedphillips.com'
-    const url = "http://localhost:8080"
+  const connect = useCallback(() => {
+    // Clear any existing timeout
+    if (connectionTimeoutRef.current) {
+      clearTimeout(connectionTimeoutRef.current);
+    }
+
+    setStatus({ message: 'Connecting...', color: 'text-[var(--text-secondary)]' });
+
+    const url = "https://drake.lukedphillips.com";
 
     const newSocket = io(url, { transports: ['websocket'] });
 
+    // Set 5s timeout
+    connectionTimeoutRef.current = setTimeout(() => {
+      if (!newSocket.connected) {
+        setStatus({ message: 'Failed to connect to server', color: 'text-[var(--color-accent-red)]' });
+        newSocket.disconnect(); // Stop trying to connect
+      }
+    }, 5000);
+
     newSocket.on('connect', () => {
+      if (connectionTimeoutRef.current) {
+        clearTimeout(connectionTimeoutRef.current);
+      }
       setConnected(true);
       setStatus({ message: `Connected! SID: ${newSocket.id}`, color: 'text-[var(--color-accent-green)]' });
       // Initialize with default controllers
@@ -53,6 +71,10 @@ export default function DrakeSimulationProvider({ children, initialControllers =
   }, [initialControllers]);
 
   const disconnect = useCallback(() => {
+    if (connectionTimeoutRef.current) {
+      clearTimeout(connectionTimeoutRef.current);
+      connectionTimeoutRef.current = null;
+    }
     if (socket) {
       socket.disconnect();
       setSocket(null);
