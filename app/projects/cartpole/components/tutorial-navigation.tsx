@@ -5,11 +5,11 @@ import { usePathname } from 'next/navigation';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 
 const STEPS = [
-  { path: '/projects/drake-sim', label: 'Intro' },
-  { path: '/projects/drake-sim/pid', label: 'PID' },
-  { path: '/projects/drake-sim/lqr', label: 'LQR' },
-  { path: '/projects/drake-sim/fvi', label: 'RL' },
-  { path: '/projects/drake-sim/traj-opt', label: 'Traj-Opt' },
+  { path: '/projects/cartpole', label: 'Intro' },
+  { path: '/projects/cartpole/pid', label: 'PID' },
+  { path: '/projects/cartpole/lqr', label: 'LQR' },
+  { path: '/projects/cartpole/fvi', label: 'RL' },
+  { path: '/projects/cartpole/traj-opt', label: 'Traj-Opt' },
 ];
 
 export default function TutorialNavigation() {

@@ -36,11 +36,11 @@ export default function DrakeSimLayout({ children, initialControllers }: DrakeSi
   }, []);
 
   // Determine available controllers based on path
-  const isIntro = pathname === '/projects/drake-sim';
-  const isPID = pathname === '/projects/drake-sim/pid';
-  const isLQR = pathname === '/projects/drake-sim/lqr';
-  const isRL = pathname === '/projects/drake-sim/fvi';
-  const isTrajOpt = pathname === '/projects/drake-sim/traj-opt';
+  const isIntro = pathname === '/projects/cartpole';
+  const isPID = pathname === '/projects/cartpole/pid';
+  const isLQR = pathname === '/projects/cartpole/lqr';
+  const isRL = pathname === '/projects/cartpole/fvi';
+  const isTrajOpt = pathname === '/projects/cartpole/traj-opt';
 
   const leftPanel = (
     <div className="h-full flex flex-col">
