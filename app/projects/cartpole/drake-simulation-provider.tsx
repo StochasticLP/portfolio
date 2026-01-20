@@ -22,7 +22,7 @@ export default function DrakeSimulationProvider({ children, initialControllers =
 
   const connect = useCallback(() => {
 
-    const url = 'https://drake.lukedanielphillips.com'
+    const url = 'https://drake.lukedphillips.com'
 
     const newSocket = io(url, { transports: ['websocket'] });
 
