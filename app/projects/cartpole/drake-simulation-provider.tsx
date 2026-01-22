@@ -40,7 +40,7 @@ export default function DrakeSimulationProvider({ children, initialControllers =
         setStatus({ message: 'Failed to connect to server', color: 'text-[var(--color-accent-red)]' });
         newSocket.disconnect(); // Stop trying to connect
       }
-    }, 5000);
+    }, 10000);
 
     newSocket.on('connect', () => {
       if (connectionTimeoutRef.current) {
