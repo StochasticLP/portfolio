@@ -128,6 +128,8 @@ export function CustomMDX(props) {
       {...props}
       components={{ ...components, ...(props.components || {}) }}
       options={{
+        // our own posts use JS expressions (e.g. ImageGrid props); dangerous globals stay blocked
+        blockJS: false,
         mdxOptions: {
           remarkPlugins: [remarkMath],
           rehypePlugins: [rehypeKatex],
