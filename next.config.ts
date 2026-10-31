@@ -3,6 +3,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        // the match server runs on the host's machine behind a Cloudflare tunnel
+        source: "/3v3",
+        destination: "https://3v3.lukedphillips.com",
+        permanent: false,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

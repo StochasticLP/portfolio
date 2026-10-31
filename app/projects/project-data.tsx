@@ -42,4 +42,11 @@ export const projects: Project[] = [
     url: "https://github.com/StochasticLP/FFT-denoise.git",
     image: "/fft.png",
   },
+  {
+    title: "3v3 Multiplayer Robot Sim",
+    date: "2026",
+    description: "A six-robot match you can join from your browser. Only live while the host is running a match.",
+    url: "/3v3",
+    image: "/logo.png",
+  },
 ];
