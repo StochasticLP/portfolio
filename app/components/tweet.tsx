@@ -1,5 +1,5 @@
 import { getTweet } from "react-tweet/api";
-import { EmbeddedTweet, TweetNotFound, type TweetProps } from "react-tweet";
+import { EmbeddedTweet, TweetNotFound, enrichTweet, type TweetProps } from "react-tweet";
 import "./tweet.css";
 
 const TweetContent = async ({ id, components, onError }: TweetProps) => {
@@ -15,7 +15,18 @@ const TweetContent = async ({ id, components, onError }: TweetProps) => {
       })
     : undefined;
 
-  if (!tweet) {
+  // the API sometimes returns a tweet the renderer can't use (e.g. no `entities`); show "not found" rather than failing the build
+  let renderable = !!tweet;
+  if (tweet) {
+    try {
+      enrichTweet(tweet);
+    } catch (err) {
+      console.error(err);
+      renderable = false;
+    }
+  }
+
+  if (!tweet || !renderable) {
     const NotFound = components?.TweetNotFound || TweetNotFound;
     return <NotFound error={error} />;
   }
