@@ -40,6 +40,8 @@ html, body {
   --color-accent-green: #22c55e;
   --color-accent-blue: #3b82f6;
   --color-accent-yellow: #eab308;
+  --chart-1: #3b82f6;
+  --chart-2: #ef4444;
 
   /* Syntax Highlighting (Keep existing if needed, or map to new vars) */
   --sh-class: #2d5e9d;
@@ -66,6 +68,8 @@ html, body {
   --color-accent-green: #adda78;
   --color-accent-blue: #85dacc;
   --color-accent-yellow: #f9cc6c;
+  --chart-1: #3d96ee;
+  --chart-2: #ee5578;
 
   /* Syntax Highlighting */
   background-color: var(--bg-primary);
