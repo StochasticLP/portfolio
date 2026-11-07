@@ -22,6 +22,14 @@ export const projects: Project[] = [
     image: "/chambers.gif",
   },
   {
+    title: "ShadowCut",
+    date: "2026",
+    description:
+      "Photograph loose tools and get laser-cut foam inserts. Vision measures each tool to true size, then a nesting search lays them out for your drawer.",
+    url: "/shadowcut",
+    image: "/shadowcut.jpg",
+  },
+  {
     title: "Modeling Income Distributions",
     date: "2023",
     description: "A numerical simulation of income distributions using Geometric Brownian motion.",
