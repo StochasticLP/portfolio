@@ -8,6 +8,14 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "ShadowCut",
+    date: "2026",
+    description:
+      "Photograph loose tools and get laser-cut foam inserts. Vision measures each tool to true size, then a nesting search lays them out for your drawer.",
+    url: "/projects/shadowcut",
+    image: "/shadowcut.jpg",
+  },
+  {
     title: "Interactive Cartpole Tutorial",
     date: "2025",
     description: "A demonstration of different control techniques for a cartpole system implemented in Drake.",
