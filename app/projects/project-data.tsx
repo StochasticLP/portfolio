@@ -8,6 +8,22 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "S2 Arena",
+    date: "2026",
+    description:
+      "A simulator for the ARC Championship: rulebook arenas, an automatic referee, and real robot firmware in the loop. Six robots play one match, and people drive them from a browser.",
+    url: "/projects/s2-arena",
+    image: "/s2-arena.jpg",
+  },
+  {
+    title: "RL Policy Training",
+    date: "2026",
+    description:
+      "Multi-agent PPO for a team of three robots, trained in a fast fitted world and tested in MuJoCo. Includes the technical overview and the results so far.",
+    url: "/projects/rl-policy",
+    image: "/rl-policy.jpg",
+  },
+  {
     title: "Interactive Cartpole Tutorial",
     date: "2025",
     description: "A demonstration of different control techniques for a cartpole system implemented in Drake.",
