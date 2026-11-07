@@ -11,6 +11,21 @@ const nextConfig: NextConfig = {
         destination: "https://3v3.lukedphillips.com",
         permanent: false,
       },
+      {
+        source: "/shadowcut",
+        destination: "https://shadowcut.lukedphillips.com",
+        permanent: false,
+      },
+      {
+        source: "/projects/shadowcut",
+        destination: "https://shadowcut.lukedphillips.com",
+        permanent: false,
+      },
+      {
+        source: "/project/shadowcut",
+        destination: "https://shadowcut.lukedphillips.com",
+        permanent: false,
+      },
     ];
   },
   async rewrites() {
