@@ -24,7 +24,8 @@ export default function RootLayout({
   return (
     <html lang="en" 
     className={inter.className} 
-    style={{ textSizeAdjust: "100%" }}>
+    style={{ textSizeAdjust: "100%" }}
+    suppressHydrationWarning>
       <head>
         <title>{metaData.title}</title>
         <link rel="icon" href="/logo.png" type="image/png" />
